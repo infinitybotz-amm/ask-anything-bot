@@ -32,7 +32,7 @@ app.add_middleware(
 # Serve frontend
 @app.get("/")
 async def read_index():
-    return FileResponse('../frontend/index.html')
+    return FileResponse(BASE_DIR / 'frontend' / 'index.html')
 
 # Configure Gemini
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
