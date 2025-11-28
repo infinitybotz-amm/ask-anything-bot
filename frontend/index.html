@@ -35,13 +35,23 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            /* Safari text rendering */
+            -moz-osx-font-smoothing: grayscale;
+            /* Firefox on Mac */
         }
 
         #root {
             height: 100vh;
+            height: -webkit-fill-available;
+            /* Safari mobile fix */
             width: 100vw;
             display: grid;
+            display: -ms-grid;
+            /* IE/Edge */
             grid-template-rows: auto 1fr auto auto;
+            -ms-grid-rows: auto 1fr auto auto;
+            /* IE/Edge */
             max-width: 100%;
             margin: 0 auto;
             background: var(--bg-color);
@@ -53,15 +63,31 @@
             padding: 1rem 2rem;
             border-bottom: none;
             display: flex;
+            display: -webkit-flex;
+            /* Safari */
             justify-content: space-between;
+            -webkit-justify-content: space-between;
+            /* Safari */
             align-items: center;
+            -webkit-align-items: center;
+            /* Safari */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             z-index: 10;
+            min-height: 60px;
+            /* Ensure minimum height */
+            flex-shrink: 0;
+            /* Prevent shrinking */
+            -webkit-flex-shrink: 0;
+            /* Safari */
         }
 
         .logo-area {
             display: flex;
+            display: -webkit-flex;
+            /* Safari */
             align-items: center;
+            -webkit-align-items: center;
+            /* Safari */
             gap: 0.75rem;
         }
 
