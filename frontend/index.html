@@ -288,6 +288,101 @@
                 transform: scale(1);
             }
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+
+            h1::before {
+                content: 'Ask Anything';
+            }
+
+            h1 span {
+                font-size: 0.85rem;
+                padding-left: 0.35rem;
+                margin-left: 0.35rem;
+            }
+
+            .chat-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .message {
+                max-width: 90%;
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .input-area {
+                padding: 1rem;
+            }
+
+            textarea {
+                height: 50px;
+                font-size: 0.95rem;
+            }
+
+            button.send-btn {
+                padding: 0 1rem;
+                font-size: 0.8rem;
+            }
+
+            select {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            footer {
+                padding: 1rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            h1 {
+                font-size: 0.9rem;
+            }
+
+            h1 span {
+                display: none;
+                /* Hide subtitle on very small screens */
+            }
+
+            .chat-container {
+                padding: 0.75rem;
+            }
+
+            .message {
+                max-width: 95%;
+                padding: 0.75rem 1rem;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            textarea {
+                height: 60px;
+            }
+
+            button.send-btn {
+                width: 100%;
+                padding: 0.75rem;
+            }
+        }
     </style>
 </head>
 
