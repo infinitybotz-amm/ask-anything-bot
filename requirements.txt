@@ -4,3 +4,11 @@ google-generativeai
 openai
 python-dotenv
 python-multipart
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-google-genai==1.0.4
+langchain-openai==0.1.7
+pypdf
+python-docx
+faiss-cpu
+tiktoken

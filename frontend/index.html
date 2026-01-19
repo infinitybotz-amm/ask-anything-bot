@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -155,6 +156,7 @@
             line-height: 1.6;
             font-size: 1rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            white-space: pre-wrap;
         }
 
         .message.user {
@@ -171,20 +173,50 @@
         }
 
         .message strong {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .message h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--murali-company-green-dark);
+        }
+
+        .message p {
+            margin-bottom: 0.75rem;
+        }
+
+        .message ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .message li {
+            margin-bottom: 0.25rem;
+        }
+
+        .message-model-label {
             display: block;
             font-size: 0.75rem;
             margin-bottom: 0.5rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            font-weight: 700;
         }
 
         /* Input Area */
         .input-area {
             background: var(--card-bg);
-            padding: 2rem;
+            padding: 1rem 2rem 2rem 2rem;
+            /* Adjusted padding */
             border-top: 1px solid var(--border-color);
             display: flex;
+            flex-direction: column;
+            /* Stack upload and input */
             justify-content: center;
         }
 
@@ -487,8 +519,8 @@
                     <div className="chat-container">
                         {messages.map((msg, index) => (
                             <div key={index} className={`message ${msg.role}`}>
-                                <strong>{msg.model}</strong>
-                                {msg.content}
+                                <div className="message-model-label">{msg.model}</div>
+                                <div dangerouslySetInnerHTML={{ __html: marked.parse(msg.content) }} />
                             </div>
                         ))}
                         {isLoading && (
@@ -505,6 +537,35 @@
                     </div>
 
                     <div className="input-area">
+                        <div className="file-upload-container" style={{ textAlign: 'center', marginBottom: '10px' }}>
+                            {isLoading ? <span style={{ fontSize: '0.8rem', color: '#666' }}>Processing...</span> :
+                                <label style={{ cursor: 'pointer', color: '#12805C', fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                                    <input type="file" onChange={async (e) => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setIsLoading(true);
+                                            const formData = new FormData();
+                                            formData.append('file', e.target.files[0]);
+                                            try {
+                                                const res = await fetch('/upload', { method: 'POST', body: formData });
+                                                const data = await res.json();
+
+                                                if (!res.ok) {
+                                                    throw new Error(data.detail || 'Upload failed');
+                                                }
+
+                                                setMessages(prev => [...prev, { role: 'bot', content: `Document "${data.filename}" loaded! I will now answer based on this file.`, model: 'System' }]);
+                                            } catch (err) {
+                                                console.error(err);
+                                                setMessages(prev => [...prev, { role: 'bot', content: `Error: ${err.message}`, model: 'System' }]);
+                                            } finally {
+                                                setIsLoading(false);
+                                            }
+                                        }
+                                    }} style={{ display: 'none' }} />
+                                    📎 Upload Document (PDF/Docx)
+                                </label>
+                            }
+                        </div>
                         <form className="input-wrapper" onSubmit={handleSubmit}>
                             <textarea
                                 value={input}

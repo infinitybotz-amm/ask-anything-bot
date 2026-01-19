@@ -1,0 +1,14 @@
+{
+  "name": "ask-anything-chatbot",
+  "version": "1.0.0",
+  "description": "Ask Anything Chatbot - FastAPI + LangChain + RAG",
+  "main": "backend/main.py",
+  "scripts": {
+    "start": "bash -c 'cd \"$(dirname \"$0\")\" && ./scripts/start.sh'",
+    "dev": "bash -c 'cd \"$(dirname \"$0\")\" && ./scripts/start.sh'",
+    "stop": "lsof -tiTCP:8000 -sTCP:LISTEN -P -n | xargs -r kill -9 || true && echo 'Server stopped'"
+  },
+  "keywords": ["chatbot", "fastapi", "langchain", "rag"],
+  "author": "",
+  "license": "MIT"
+}
